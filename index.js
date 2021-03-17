@@ -1,5 +1,6 @@
 const Joi = require('joi');
 const express = require('express');
+const mysql = require('mysql');
 const app = express();
 app.use(express.json());
 
@@ -7,6 +8,24 @@ app.use(express.json());
 const passport = require('passport');
 const LocalStrategy =require('passport-local').Strategy;
 
+var con = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "root",
+    database: "temp_schema"
+  });
+  
+con.connect((err) => {
+if (err) throw err;
+console.log("Connected!");
+
+const sql2 = "SELECT * FROM users";
+const sql1 = "INSERT INTO users (name, password) VALUES ('hammam', 'hammamnajem123321')";
+con.query(sql2, (err, result) =>{
+    if (err) throw err;
+    console.log(result);
+  });
+});
 
 const courses = [
     {id:1, name:'course1'},
